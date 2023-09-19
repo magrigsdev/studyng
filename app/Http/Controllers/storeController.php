@@ -13,6 +13,7 @@ class storeController extends Controller
 
    public  $Niveaux = ["première année","deuxième année","troisième année"];
    public  $etablissement = ["public","privée"];
+   public  $frais_type = ["inscription","candidater","logement","garant","visa"];
    
 
     public function storeNiveau()
