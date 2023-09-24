@@ -14,4 +14,11 @@ class Type_Frais extends Model
     {
         return $this->belongsTo(Frais::class);
     }
+
+    public static function creerTypeFrais($intituler)
+    {
+        $obj = new self;
+        $obj->intituler = $intituler;
+        $obj->save();
+    }
 }

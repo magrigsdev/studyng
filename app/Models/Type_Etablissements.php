@@ -14,4 +14,16 @@ class Type_Etablissements extends Model
     {
         return $this->hasMany(Etablissements::class);
     }
+
+    //type etablissement
+
+    public static function creerTypeEtablissement($nom){
+        $obj = new self;
+        $obj->nom = $nom;
+        $obj->save();
+    }
+
+    //etablissement privée et public
+   
+
 }

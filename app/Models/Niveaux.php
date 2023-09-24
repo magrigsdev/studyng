@@ -11,6 +11,9 @@ class Niveaux extends Model
 
     
     protected $table = 'Niveaux'; 
+        protected $fillable = [
+        'nom',     
+    ];
 
     public function etablissements()
     {

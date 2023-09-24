@@ -60,7 +60,8 @@ class DatabaseInit extends Migration
 
             Schema::create('Niveaux', function (Blueprint $table) {
             $table->id('id_niv');
-            $table->string('nom');                      
+            $table->string('nom'); 
+                                 
         });
 
             Schema::create('Diplomes', function (Blueprint $table) {
