@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TypeEtablissement;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//getItem
+Route::get('typeEtab_getData', [TypeEtablissement::class,'getData']);
+Route::get('typeEtab_getItem/{id}', [TypeEtablissement::class,'getItem']);

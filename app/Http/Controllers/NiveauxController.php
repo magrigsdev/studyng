@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Niveaux;
 use Illuminate\Http\Request;
-use App\Models\Type_Etablissements;
 use Illuminate\Support\Facades\Schema;
 
-
-class TypeEtablissement extends Controller
+class NiveauxController extends Controller
 {
+    //
     public $local_id;
 
     //getData
     public function getData()
     {
-        $table = Schema::hasTable('Type_Etablissements');
+        $table = Schema::hasTable('Niveaux');
 
         if($table){
-            $data = Type_Etablissements::all();
-            $count = Type_Etablissements::count();
+            $data = Niveaux::all();
+            $count = Niveaux::count();
 
             if($count>0){
                 return response()->json([
@@ -51,11 +51,11 @@ class TypeEtablissement extends Controller
         if (is_string($id)){ $this->local_id = intval($id);} 
         else $this->local_id = $id;
 
-        $table = Schema::hasTable('Type_Etablissements');
+        $table = Schema::hasTable('Niveaux');
 
             if($table){
                 //verifier et retourne
-                $tableId = Type_Etablissements::find($this->local_id);
+                $tableId = Niveaux::find($this->local_id);
                 $name = $tableId->name;
 
                 if($tableId){
@@ -90,9 +90,8 @@ class TypeEtablissement extends Controller
     public function createTypeEtab(Request $request)
     {
         $request -> validate(["nom" => "required"]);
-        $obj = new Type_Etablissements();
+        $obj = new Niveaux();
 
-        $obj::creerTypeEtablissement($request->nom);
+        $obj::creerTypeNiveau($request->nom);
     }
-
-} 
+}

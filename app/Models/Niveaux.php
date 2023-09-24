@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Niveaux extends Model
 {
@@ -18,5 +19,12 @@ class Niveaux extends Model
     public function etablissements()
     {
         return $this->hasMany(Etablissements::class);
+    }
+
+
+    public static function creerTypeNiveau($nom){
+        $obj = new self;
+        $obj->nom = $nom;
+        $obj->save();
     }
 }
