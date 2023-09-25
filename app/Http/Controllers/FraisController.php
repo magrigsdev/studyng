@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Niveaux;
+use App\Models\Frais;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
-class NiveauxController extends Controller
+class FraisController extends Controller
 {
     //
+
     public $local_id;
 
     //getData
     public function getData()
     {
-        $table = Schema::hasTable('Niveaux');
+        $table = Schema::hasTable('Frais');
 
         if($table){
-            $data = Niveaux::all();
-            $count = Niveaux::count();
+            $data = Frais::all();
+            $count = Frais::count();
 
             if($count>0){
                 return response()->json([
@@ -51,33 +52,30 @@ class NiveauxController extends Controller
         if (is_string($id)){ $this->local_id = intval($id);} 
         else $this->local_id = $id;
 
-       
-
-        $table = Schema::hasTable('Niveaux');
+        $table = Schema::hasTable('Frais');
 
             if($table){
-                $tableId = Niveaux::where('id_niv', $this->local_id)->first();
-
                 //verifier et retourne
+                $tableId = Frais::where('id_frais', $this->local_id)->first(); 
+                //$tableId = Frais::find($this->local_id);
+                
 
                 if($tableId){
-                     $name = $tableId->nom;
+                    $name = $tableId->name;
                     return response()->json([
                         'status' => true,
                         'message' => 'success',
                         'data' => $name,
-                        'temp' => $tableId->count()
                     ], 200);
                 }
 
                 else{
                     return response()->json([
                         'status' => false,
-                        'message' => 'aucune données trouvée',
+                        'message' => 'aucune données',
                     ], 404);
 
                     }
-
             }
 
             else{
@@ -91,10 +89,11 @@ class NiveauxController extends Controller
     }
 
     //create type etablissement
-    public function createNiveau(Request $request)
+    public function createFrais(Request $request)
     {
         $request -> validate(["nom" => "required"]);
-        $obj = new Niveaux();
-        $obj::creerNiveau($request->nom);
+        $obj = new Frais();
+
+        $obj::creerFrais($request->nom);
     }
 }

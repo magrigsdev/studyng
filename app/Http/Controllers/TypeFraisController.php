@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Niveaux;
+use App\Models\Type_Frais;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
-class NiveauxController extends Controller
+class TypeFraisController extends Controller
 {
-    //
+     //
+
     public $local_id;
 
     //getData
     public function getData()
     {
-        $table = Schema::hasTable('Niveaux');
+        $table = Schema::hasTable('Type_Frais');
 
         if($table){
-            $data = Niveaux::all();
-            $count = Niveaux::count();
+            $data = Type_Frais::all();
+            $count = Type_Frais::count();
 
             if($count>0){
                 return response()->json([
@@ -51,33 +52,30 @@ class NiveauxController extends Controller
         if (is_string($id)){ $this->local_id = intval($id);} 
         else $this->local_id = $id;
 
-       
-
-        $table = Schema::hasTable('Niveaux');
+        $table = Schema::hasTable('Type_Frais');
 
             if($table){
-                $tableId = Niveaux::where('id_niv', $this->local_id)->first();
-
                 //verifier et retourne
+                //$tableId = Type_Frais::find($this->local_id);
+                 $tableId = Type_Frais::where('id_typ_fra', $this->local_id)->first(); 
+               
 
                 if($tableId){
-                     $name = $tableId->nom;
+                     $name = $tableId->intituler;
                     return response()->json([
                         'status' => true,
                         'message' => 'success',
                         'data' => $name,
-                        'temp' => $tableId->count()
                     ], 200);
                 }
 
                 else{
                     return response()->json([
                         'status' => false,
-                        'message' => 'aucune données trouvée',
+                        'message' => 'aucune données',
                     ], 404);
 
                     }
-
             }
 
             else{
@@ -91,10 +89,11 @@ class NiveauxController extends Controller
     }
 
     //create type etablissement
-    public function createNiveau(Request $request)
+    public function createType_Frais(Request $request)
     {
         $request -> validate(["nom" => "required"]);
-        $obj = new Niveaux();
-        $obj::creerNiveau($request->nom);
+        $obj = new Type_Frais();
+
+        $obj::creerTypeFrais($request->nom);
     }
 }

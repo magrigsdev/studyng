@@ -46,30 +46,37 @@ class TypeEtablissement extends Controller
     //get item
     public function getItem($id)
     {
+       
         
         //convertir  en id 
+        
         if (is_string($id)){ $this->local_id = intval($id);} 
         else $this->local_id = $id;
 
         $table = Schema::hasTable('Type_Etablissements');
 
-            if($table){
+           if($table){
                 //verifier et retourne
-                $tableId = Type_Etablissements::find($this->local_id);
-                $name = $tableId->name;
+                //$tableId = Type_Etablissements::find($this->local_id);
 
+                $tableId = Type_Etablissements::where('id_typ_eta', $this->local_id)->first();
+          
                 if($tableId){
+                    $nom = $tableId->nom;
                     return response()->json([
                         'status' => true,
                         'message' => 'success',
-                        'data' => $name,
+                        'data' => $nom,
+                        
+                       
                     ], 200);
                 }
 
                 else{
                     return response()->json([
                         'status' => false,
-                        'message' => 'aucune données',
+                        'message' => 'Aucune donnée trouvée',
+                        
                     ], 404);
 
                     }
@@ -83,6 +90,7 @@ class TypeEtablissement extends Controller
                 ],404);
 
             }
+            
 
     }
 

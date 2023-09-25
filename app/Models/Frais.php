@@ -18,4 +18,11 @@ class Frais extends Model
     {
         return $this->belongsTo(Type_frais::class);
     }
+
+        public static function creerFrais($nom)
+        {
+        $obj = new self;
+        $obj->nom = $nom;
+        $obj->save();
+        }
 }

@@ -14,4 +14,10 @@ class Diplomes extends Model
     {
         return $this->hasMany(Etablissements::class);
     }
+
+    public static function creerDiplome($nom){
+        $obj = new self;
+        $obj->nom = $nom;
+        $obj->save();
+    }
 }

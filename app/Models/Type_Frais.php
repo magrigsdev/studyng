@@ -21,4 +21,6 @@ class Type_Frais extends Model
         $obj->intituler = $intituler;
         $obj->save();
     }
+
+
 }

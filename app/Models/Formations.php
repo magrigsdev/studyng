@@ -13,4 +13,11 @@ class Formations extends Model
     {
         return $this->hasMany(Etablissements::class);
     }
+
+    public static function creerFormations($nom)
+    {
+        $obj = new self;
+        $obj->nom = $nom;
+        $obj->save();
+    }
 }

@@ -22,7 +22,7 @@ class Niveaux extends Model
     }
 
 
-    public static function creerTypeNiveau($nom){
+    public static function creerNiveau($nom){
         $obj = new self;
         $obj->nom = $nom;
         $obj->save();
