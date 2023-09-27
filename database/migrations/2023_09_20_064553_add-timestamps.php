@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Etudiants;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class AddTimestamps extends Migration
 {
@@ -14,6 +15,9 @@ class AddTimestamps extends Migration
     public function up()
     {
         //
+        Schema::create('Etudiants', function (Blueprint $table) {
+            $table->timestamps();
+        });
     }
 
     /**
@@ -25,4 +29,7 @@ class AddTimestamps extends Migration
     {
         //
     }
+
 }
+//php .\artisan make:migration add_timestamps
+//php .\artisan migrate:rollback

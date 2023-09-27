@@ -10,6 +10,18 @@ class Etudiants extends Model
     use HasFactory;
     protected $table = 'Etudiants';
 
+    public $timestamps = false;
+    protected $fillable = [
+        'nom',
+        'prenom',
+        'email',
+        'sexe',
+        'date_naissance',
+        'photo',
+        'date_inscription',
+        'id_man'
+    ];
+
     public function managers()
     {
         return $this->belongsTo(Managers::class);
@@ -24,5 +36,6 @@ class Etudiants extends Model
     {
         return $this->hasMany(Etablissements::class);
     }
+
 
 }
