@@ -16,18 +16,19 @@ class DatabaseInit extends Migration
         //
          // etape 1
            Schema::create('Managers', function (Blueprint $table) {
-            $table->id('id_man');
+            $table->id('id');
             $table->string('nom');
             $table->string('prenom');
             $table->string('email')->unique();
             $table->string('sexe');
             $table->text('addresse');
             $table->date('date_creation');
+            $table->timestamps();
             
         });
 
             Schema::create('Etudiants', function (Blueprint $table) {
-            $table->id('id_etu');
+            $table->id('id');
             $table->string('nom');
             $table->string('prenom');
             $table->string('email')->unique();
@@ -37,74 +38,82 @@ class DatabaseInit extends Migration
             $table->date('date_inscription');
             
             $table->unsignedBigInteger('id_man');
-            $table->foreign('id_man')->references('id_man')->on('Managers');
+            $table->foreign('id_man')->references('id')->on('Managers');
+            $table->timestamps();
             
         });
         
         // etape 2
 
             Schema::create('Type_Frais', function (Blueprint $table) {
-            $table->id('id_typ_fra');
-            $table->string('intituler');                      
+            $table->id('id');
+            $table->string('intituler');  
+            $table->timestamps();                    
         });
 
             Schema::create('Type_Etablissements', function (Blueprint $table) {
-            $table->id('id_typ_eta');
-            $table->string('nom');                      
+            $table->id('id');
+            $table->string('nom');
+            $table->timestamps();                      
         });
 
             Schema::create('Formations', function (Blueprint $table) {
-            $table->id('id_for');
-            $table->string('nom');                      
+            $table->id('id');
+            $table->string('nom');
+            $table->timestamps();                      
         });
 
             Schema::create('Niveaux', function (Blueprint $table) {
-            $table->id('id_niv');
-            $table->string('nom'); 
+            $table->id('id');
+            $table->string('nom');
+            $table->timestamps(); 
                                  
         });
 
             Schema::create('Diplomes', function (Blueprint $table) {
-            $table->id('id_dip');
-            $table->string('nom');                      
+            $table->id('id');
+            $table->string('nom');
+            $table->timestamps();                      
         });
 
             Schema::create('Frais', function (Blueprint $table) {
-            $table->id('id_frais');
+            $table->id('id');
             $table->string('intituler');
             $table->date('date');
+            $table->timestamps();
 
             $table->unsignedBigInteger('id_etu');
-            $table->foreign('id_etu')->references('id_etu')->on('Etudiants');
+            $table->foreign('id_etu')->references('id')->on('Etudiants');
 
-            $table->unsignedBigInteger('id_typ_fra');
-            $table->foreign('id_typ_fra')->references('id_typ_fra')->on('Type_Frais');
+            $table->unsignedBigInteger('id_tf');
+            $table->foreign('id_tf')->references('id')->on('Type_Frais');
              
         });
 
          Schema::create('Etablissements', function (Blueprint $table) {
-            $table->id('id_eta');
+            $table->id('id');
             $table->string('intituler');
             $table->string('nom');
             $table->date('date');
+            $table->timestamps();
 
             $table->unsignedBigInteger('id_etu');
-            $table->foreign('id_etu')->references('id_etu')->on('Etudiants');
+            $table->foreign('id_etu')->references('id')->on('Etudiants');
 
             $table->unsignedBigInteger('id_man');
-            $table->foreign('id_man')->references('id_man')->on('Managers');
+            $table->foreign('id_man')->references('id')->on('Managers');
 
             $table->unsignedBigInteger('id_for');
-            $table->foreign('id_for')->references('id_for')->on('Formations');
+            $table->foreign('id_for')->references('id')->on('Formations');
 
-            $table->unsignedBigInteger('id_typ_eta');
-            $table->foreign('id_typ_eta')->references('id_typ_eta')->on('Type_Etablissements');
+            $table->unsignedBigInteger('id_tye');
+            $table->foreign('id_tye')->references('id')->on('Type_Etablissements');
 
             $table->unsignedBigInteger('id_dip');
-            $table->foreign('id_dip')->references('id_dip')->on('Diplomes');
+            $table->foreign('id_dip')->references('id')->on('Diplomes');
 
             $table->unsignedBigInteger('id_niv');
-            $table->foreign('id_niv')->references('id_niv')->on('Niveaux');
+            $table->foreign('id_niv')->references('id')->on('Niveaux');
              
         });
     }

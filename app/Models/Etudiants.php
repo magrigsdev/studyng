@@ -19,7 +19,7 @@ class Etudiants extends Model
         'date_naissance',
         'photo',
         'date_inscription',
-        'id_man'
+        'id'
     ];
 
     public function managers()
