@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Etudiants;
+use App\Models\Managers;
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\View;
@@ -23,11 +25,42 @@ class EtudiantsController extends Controller
             $data = Etudiants::all();
             $count = Etudiants::count();
 
+            $etudiants = [];
+            $man_nom = "";
+
+            //$data = Managers::all()->toArray();
+            //dd($data);
+
+
             if($count>0){
+                
+                foreach ($data as  $item){
+                    $temp1 = Etudiants::find($item->id);
+                    $temp2 = Managers::find($temp1->id_man);
+
+                    //dd($temp2->nom);
+                    $man_nom = $temp2->nom;
+
+                    $etudiant = [
+                        'id'=>$item->id,
+                        'nom' =>$item->nom,
+                        'prenom'=>$item->prenom,
+                        'email'=>$item->email,
+                        'sexe'=>$item->sexe,
+                        'date_naissance'=>$item->date_naissance,
+                        'photo'=>$item->photo,
+                        'date_inscription'=>$item->date_inscription,
+                        'id_man'=>$man_nom,
+
+                    ];
+
+                    $etudiants[] = $etudiant;
+                }
+
                 return response()->json([
                         'status' => true,
                         'message' => 'success',
-                        'data' => $data,
+                        'data' => $etudiants,
                     ], 200);
             }
             else{
@@ -57,16 +90,34 @@ class EtudiantsController extends Controller
 
             if($table){
                 //verifier et retourne
-                $tableId = Etudiants::where('id_etu', $this->local_id)->first(); 
-                //$tableId = Frais::find($this->local_id);
-                
+                $tableId = Etudiants::find($this->local_id); 
 
                 if($tableId){
-                    $name = $tableId->nom;
+
+                    //$name = $tableId->nom;
+                    //recuperer le nom du manager
+                    $id_man = $tableId->id_man;
+                    $tab_man = Managers::find($id_man);
+                    //dd($id_man);
+                    $man_nom = $tab_man->nom;
+
+                    //le tab
+                    $data = [
+                        'id'=>$tableId->id,
+                        'nom' =>$tableId->nom,
+                        'prenom'=>$tableId->prenom,
+                        'email'=>$tableId->email,
+                        'sexe'=>$tableId->sexe,
+                        'date_naissance'=>$tableId->date_naissance,
+                        'photo'=>$tableId->photo,
+                        'date_inscription'=>$tableId->date_inscription,
+                        'id_man'=>$man_nom,
+                    ];
+
                     return response()->json([
                         'status' => true,
                         'message' => 'success',
-                        'data' => $name,
+                        'data' => $data,
                     ], 200);
                 }
 
@@ -161,7 +212,7 @@ class EtudiantsController extends Controller
                 'status'=>false,
             ], 422);
         }else{
-            $etudiant = Etudiants::where('id_etu', $id);
+            $etudiant = Etudiants::find($id);
 
             if($etudiant){
                 $etudiant->update([
@@ -184,7 +235,7 @@ class EtudiantsController extends Controller
             else{
                 return response()->json([
                     'status'=>false,
-                    'message'=>'aucune information ne correspond à cette etudiant !'
+                    'message'=>'aucune information a été trouvée!'
 
                 ], 404);
 

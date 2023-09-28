@@ -13,7 +13,6 @@ class DatabaseInit extends Migration
      */
     public function up()
     {
-        //
          // etape 1
            Schema::create('Managers', function (Blueprint $table) {
             $table->id('id');

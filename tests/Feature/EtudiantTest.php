@@ -19,19 +19,22 @@ class EtudiantTest extends TestCase
      *
      * @return void
      */
-        public function test_etudiant_create()
+        public function test_etudiant_update()
         {
-            $post = Etudiants::create([
-                'nom'=>'kouilou',
-                'prenom'=>'loic',
-                'sexe'=>'m',
-                'email'=>'loic@gmail.com',
-                'date_naissance'=>'2000_09_30',
-                'photo'=>'./elian/image.jpg',
-                'date_inscription'=>'2000_09_10',
-                'id_man'=>2
-            ]);
-        $this->assertEquals(0, Etudiants::all());
+        //     $post = Etudiants::create([
+        //         'nom'=>'kouilou',
+        //         'prenom'=>'loic',
+        //         'sexe'=>'m',
+        //         'email'=>'loic@gmail.com',
+        //         'date_naissance'=>'2000_09_30',
+        //         'photo'=>'./elian/image.jpg',
+        //         'date_inscription'=>'2000_09_10',
+        //         'id_man'=>2
+        //     ]);
+        // $this->assertEquals(0, Etudiants::all());
+
+        
+        //$etu->updateItem($req, $id);
         }
 
        

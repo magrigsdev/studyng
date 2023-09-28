@@ -55,6 +55,7 @@ Route::get('typ_fra_getItem/{id}', [TypeFraisController::class,'getItem']);
 Route::get('etu_getData', [EtudiantsController::class,'getData']);
 Route::get('etu_getItem/{id}', [EtudiantsController::class,'getItem']);
 Route::post('etu_create', [EtudiantsController::class,'createItem']);
+Route::post('etu_update/{id}', [EtudiantsController::class,'updateItem']);
 
 //Frais Managers 
 Route::get('man_getData', [ManagersController::class,'getData']);
