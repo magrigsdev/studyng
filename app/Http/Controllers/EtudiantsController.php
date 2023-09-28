@@ -35,11 +35,8 @@ class EtudiantsController extends Controller
             if($count>0){
                 
                 foreach ($data as  $item){
-                    $temp1 = Etudiants::find($item->id);
-                    $temp2 = Managers::find($temp1->id_man);
-
-                    //dd($temp2->nom);
-                    $man_nom = $temp2->nom;
+                    $row_etudiant = Etudiants::find($item->id);
+                    $managers = Managers::find($row_etudiant->id_man);
 
                     $etudiant = [
                         'id'=>$item->id,
@@ -50,8 +47,7 @@ class EtudiantsController extends Controller
                         'date_naissance'=>$item->date_naissance,
                         'photo'=>$item->photo,
                         'date_inscription'=>$item->date_inscription,
-                        'id_man'=>$man_nom,
-
+                        'id_man'=>$managers->nom,
                     ];
 
                     $etudiants[] = $etudiant;
