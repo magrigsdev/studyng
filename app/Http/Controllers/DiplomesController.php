@@ -87,12 +87,6 @@ class DiplomesController extends Controller
 
     }
 
-    //create type etablissement
-    public function createDiplome(Request $request)
-    {
-        $request -> validate(["nom" => "required"]);
-        $obj = new Diplomes();
 
-        $obj::creerDiplome($request->nom);
-    }
+
 }

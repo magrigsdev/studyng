@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Functions\Myfunctions;
 use App\Models\Etudiants;
 use App\Models\Managers;
 use Illuminate\Database\Capsule\Manager;
@@ -15,11 +16,12 @@ class EtudiantsController extends Controller
 {
      //
     public $local_id;
+    use Myfunctions;
 
     //getData or getItems
-    public function getData()
-    {
+    public function getData(){
         $table = Schema::hasTable('Etudiants');
+
 
         if($table){
             $data = Etudiants::all();
@@ -239,6 +241,42 @@ class EtudiantsController extends Controller
 
             
         }
+    }
+
+    public function getItemByName($nom){
+
+        $table = Schema::hasTable('Etudiants');
+
+            if($table){
+                //verifier et retourne
+                $resultat = Etudiants::where('nom', $nom)->first(); 
+                //$tableId = Frais::find($this->local_id);
+
+                if($resultat){
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'success',
+                        'data' => $resultat,
+                    ], 200);
+                }
+
+                else{
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'aucune données',
+                    ], 404);
+
+                    }
+            }
+
+            else{
+                return response()->json([
+                    'status'=>false,
+                    'message'=>"la table n'existe pas",    
+                ],404);
+
+            }
+
     }
     public  function DateNaisCheck($dateNais){
         $reponse = false;

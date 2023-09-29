@@ -45,9 +45,7 @@ class TypeEtablissement extends Controller
 
     //get item
     public function getItem($id)
-    {
-       
-        
+    { 
         //convertir  en id 
         
         if (is_string($id)){ $this->local_id = intval($id);} 
@@ -57,9 +55,9 @@ class TypeEtablissement extends Controller
 
            if($table){
                 //verifier et retourne
-                //$tableId = Type_Etablissements::find($this->local_id);
+                $tableId = Type_Etablissements::find($this->local_id);
 
-                $tableId = Type_Etablissements::where('id_typ_eta', $this->local_id)->first();
+                //$tableId = Type_Etablissements::where('id_typ_eta', $this->local_id)->first();
           
                 if($tableId){
                     $nom = $tableId->nom;
@@ -80,7 +78,6 @@ class TypeEtablissement extends Controller
                     ], 404);
 
                     }
-
             }
 
             else{
@@ -95,12 +92,5 @@ class TypeEtablissement extends Controller
     }
 
     //create type etablissement
-    public function createTypeEtab(Request $request)
-    {
-        $request -> validate(["nom" => "required"]);
-        $obj = new Type_Etablissements();
-
-        $obj::creerTypeEtablissement($request->nom);
-    }
 
 } 

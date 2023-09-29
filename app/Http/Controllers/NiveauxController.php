@@ -56,7 +56,8 @@ class NiveauxController extends Controller
         $table = Schema::hasTable('Niveaux');
 
             if($table){
-                $tableId = Niveaux::where('id_niv', $this->local_id)->first();
+                //$tableId = Niveaux::where('id_niv', $this->local_id)->first();
+                $tableId = Niveaux::find($this->local_id)->first();
 
                 //verifier et retourne
 

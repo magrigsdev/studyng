@@ -55,11 +55,15 @@ Route::get('typ_fra_getItem/{id}', [TypeFraisController::class,'getItem']);
 Route::get('etu_getData', [EtudiantsController::class,'getData']);
 Route::get('etu_getItem/{id}', [EtudiantsController::class,'getItem']);
 Route::post('etu_create', [EtudiantsController::class,'createItem']);
-Route::post('etu_update/{id}', [EtudiantsController::class,'updateItem']);
+Route::put('etu_update/{id}', [EtudiantsController::class,'updateItem']);
+Route::get('etu_getItemBy/{nom}', [EtudiantsController::class,'getItemByName']);
 
-//Frais Managers 
+//Managers 
 Route::get('man_getData', [ManagersController::class,'getData']);
 Route::get('man_getItem/{id}', [ManagersController::class,'getItem']);
+Route::post('man_create', [ManagersController::class,'createItem']);
+Route::put('man_update/{id}', [ManagersController::class,'updateItem']);
+Route::get('man_getItemBy/{nom}', [ManagersController::class,'getItemByName']);
 
 //Frais etablissemnt 
 Route::get('eta_getData', [EtablissementsController::class,'getData']);

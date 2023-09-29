@@ -56,8 +56,8 @@ class TypeFraisController extends Controller
 
             if($table){
                 //verifier et retourne
-                //$tableId = Type_Frais::find($this->local_id);
-                 $tableId = Type_Frais::where('id_typ_fra', $this->local_id)->first(); 
+                $tableId = Type_Frais::find($this->local_id);
+                 //$tableId = Type_Frais::where('id_typ_fra', $this->local_id)->first(); 
                
 
                 if($tableId){

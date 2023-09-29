@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Managers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 
 class ManagersController extends Controller
 {
@@ -44,8 +45,7 @@ class ManagersController extends Controller
     }
 
     //get item
-    public function getItem($id)
-    {
+    public function getItem($id){
         
         //convertir  en id 
         if (is_string($id)){ $this->local_id = intval($id);} 
@@ -86,12 +86,142 @@ class ManagersController extends Controller
 
     }
 
-    //create type etablissement
-    public function createFrais(Request $request)
-    {
-        $request -> validate(["nom" => "required"]);
-        $obj = new Managers();
+        //create item
+    public function createItem(Request $request){
 
-        $obj::creerFrais($request->nom);
+        $validator = Validator::make($request->all(), [
+
+        'nom'=>'required',
+        'prenom' =>'required',
+        'email'=>'required',
+        'sexe'=>'required',
+        'addresse'=>'required',
+        'photo'=>'required',
+        'date_creation'=>'required',
+        
+        ]);
+
+        if($validator->fails()){
+            response()->json([
+                'message'=>'données mal saisies',
+                'status'=>false,
+            ], 422);
+        }else{
+            $etudiant = Managers::create([
+                'nom'=> $request->nom,
+                'prenom'=> $request->prenom,
+                'email' => $request->email,
+                'sexe'=>$request->sexe,
+                'addresse' => $request->addresse,
+                'photo'=>$request->photo,
+                'date_creation'=>$request->date_creation,
+            ]);
+
+            if($etudiant){
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'manager enregistré',
+                    
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'status'=>false,
+                    'message'=>"Une erreur s'est produite  ",
+                    
+                ], 500);
+            }
+
+        }
     }
+
+        public function updateItem(Request $request,  $id){
+            $validator = Validator::make($request->all(), [
+
+            'nom'=>'required',
+            'prenom' =>'required',
+            'email'=>'required',
+            'sexe'=>'required',
+            'addresse'=>'required',
+            'photo'=>'required',
+            'date_creation'=>'required',
+
+            ]);
+
+        if($validator->fails()){
+            response()->json([
+                'message'=>'données mal saisies',
+                'status'=>false,
+            ], 422);
+        }else{
+            $etudiant = Managers::find($id);
+
+            if($etudiant){
+                $etudiant->update([
+                'nom'=> $request->nom,
+                'prenom'=> $request->prenom,
+                'email' => $request->email,
+                'sexe'=>$request->sexe,
+                'addresse' => $request->addresse,
+                'photo'=>$request->photo,
+                'date_creation'=>$request->date_creation,
+                ]);
+
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'manager mise à jour'
+
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'aucune information a été trouvée!'
+
+                ], 404);
+
+            }
+
+            
+        }
+    }
+
+        public function getItemByName($nom){
+
+        $table = Schema::hasTable('Managers');
+
+            if($table){
+                //verifier et retourne
+                $manager_name = Managers::where('nom', $nom)->first(); 
+                //$tableId = Frais::find($this->local_id);
+
+                if($manager_name){
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'success',
+                        'data' => $manager_name,
+                    ], 200);
+                }
+
+                else{
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'aucune données',
+                    ], 404);
+
+                    }
+            }
+
+            else{
+                return response()->json([
+                    'status'=>false,
+                    'message'=>"la table n'existe pas",    
+                ],404);
+
+            }
+
+    }
+
+
+
 }
