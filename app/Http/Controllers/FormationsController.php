@@ -58,7 +58,7 @@ class FormationsController extends Controller
             if($table){
 
                 //verifier et retourne
-                $tableId = Formations::where('id_for', $this->local_id)->first(); 
+                $tableId = Formations::where('id', $this->local_id)->first(); 
 
                 if($tableId){
                     $name = $tableId->nom;
@@ -88,12 +88,4 @@ class FormationsController extends Controller
 
     }
 
-    //create type etablissement
-    public function createFormation(Request $request)
-    {
-        $request -> validate(["nom" => "required"]);
-        $obj = new Formations();
-
-        $obj::creerFormations($request->nom);
-    }
 }

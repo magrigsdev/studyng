@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Niveaux;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 
 class NiveauxController extends Controller
 {
@@ -92,10 +93,37 @@ class NiveauxController extends Controller
     }
 
     //create type etablissement
-    public function createNiveau(Request $request)
-    {
-        $request -> validate(["nom" => "required"]);
-        $obj = new Niveaux();
-        $obj::creerNiveau($request->nom);
+        public function createItem(Request $request){
+
+        $validator = Validator::make($request->all(), [
+        'nom'=>'required',
+        ]);
+
+        if($validator->fails()){
+            response()->json([
+                'message'=>'données mal saisies',
+                'status'=>false,
+            ], 422);
+        }else{
+            $etudiant = Niveaux::create([
+                'nom'=> $request->nom,
+            ]);
+
+            if($etudiant){
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'information enregistré',
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'status'=>false,
+                    'message'=>"Une erreur s'est produite ",
+                    
+                ], 200);
+            }
+
+        }
     }
+
 }

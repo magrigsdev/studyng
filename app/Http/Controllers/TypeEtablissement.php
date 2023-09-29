@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Type_Etablissements;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class TypeEtablissement extends Controller
@@ -65,8 +67,7 @@ class TypeEtablissement extends Controller
                         'status' => true,
                         'message' => 'success',
                         'data' => $nom,
-                        
-                       
+                                              
                     ], 200);
                 }
 
@@ -92,5 +93,38 @@ class TypeEtablissement extends Controller
     }
 
     //create type etablissement
+    public function createItem(Request $request){
+
+        $validator = Validator::make($request->all(), [
+        'nom'=>'required',
+        ]);
+
+        if($validator->fails()){
+            response()->json([
+                'message'=>'données mal saisies',
+                'status'=>false,
+            ], 422);
+        }else{
+            $etudiant = Type_Etablissements::create([
+                'nom'=> $request->nom,
+            ]);
+
+            if($etudiant){
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'Type établissement enregistré',
+                    
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'status'=>false,
+                    'message'=>"Une erreur s'est produite ",
+                    
+                ], 200);
+            }
+
+        }
+    }
 
 } 

@@ -30,14 +30,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //getItem type etablissement
 Route::get('typeEtab_getData', [TypeEtablissement::class,'getData']);
 Route::get('typeEtab_getItem/{id}', [TypeEtablissement::class,'getItem']);
+Route::post('typeEtab_create', [TypeEtablissement::class,'createItem']);
 
 //getItem type Niveau
 Route::get('niv_getData', [NiveauxController::class,'getData']);
 Route::get('niv_getItem/{id}', [NiveauxController::class,'getItem']);
+Route::post('niv_create', [NiveauxController::class,'createItem']);
 
 //diplomes
 Route::get('dip_getData', [DiplomesController::class,'getData']);
 Route::get('dip_getItem/{id}', [DiplomesController::class,'getItem']);
+Route::post('dip_create', [NiveauxController::class,'createItem']);
 
 //Frais
 Route::get('fra_getData', [FraisController::class,'getData']);

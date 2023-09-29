@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Diplomes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 
 class DiplomesController extends Controller
 {
@@ -54,12 +55,15 @@ class DiplomesController extends Controller
         else $this->local_id = $id;
 
         $table = Schema::hasTable('Diplomes');
+        
 
             if($table){
                 //verifier et retourne
-                $tableId = Diplomes::where('id_dip', $this->local_id)->first();            
+                $tableId = Diplomes::find($this->local_id);
+                //dd($tableId);            
 
-                if($tableId){
+                if($tableId != null){
+                    $tableId = Diplomes::find($this->local_id)->first();
                      $name = $tableId->nom;
                     return response()->json([
                         'status' => true,
@@ -85,6 +89,40 @@ class DiplomesController extends Controller
 
             }
 
+    }
+
+    public function createItem(Request $request){
+
+        $validator = Validator::make($request->all(), [
+        'nom'=>'required',
+        ]);
+
+        if($validator->fails()){
+            response()->json([
+                'message'=>'données mal saisies',
+                'status'=>false,
+            ], 422);
+        }else{
+            $etudiant = Diplomes::create([
+                'nom'=> $request->nom,
+            ]);
+
+            if($etudiant){
+                return response()->json([
+                    'status'=>true,
+                    'message'=>'donnée enregistrée',
+                    
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'status'=>false,
+                    'message'=>"Une erreur s'est produite ",
+                    
+                ], 200);
+            }
+
+        }
     }
 
 

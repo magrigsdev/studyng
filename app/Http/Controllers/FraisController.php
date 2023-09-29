@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Etudiants;
 use App\Models\Frais;
+use App\Models\Type_Frais;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
@@ -18,14 +20,31 @@ class FraisController extends Controller
         $table = Schema::hasTable('Frais');
 
         if($table){
-            $data = Frais::all();
+            $all = Frais::all();
             $count = Frais::count();
 
             if($count>0){
+
+                foreach ($all as  $item){
+                    $row_frais = Frais::find($item->id);
+                    $etudiant = Etudiants::find($row_frais->id_etu);
+                    $type_frais = Type_Frais::find($row_frais->id_tf);
+
+                    $frais = [
+                        'id'=>$item->id,
+                        'intituler' =>$item->nom,
+                        'date'=>$item->date,
+                        'id_etu'=>$etudiant,
+                        'id_tf'=>$type_frais,
+                    ];
+
+                    $frais_all[] = $frais;
+                }
+
                 return response()->json([
                         'status' => true,
                         'message' => 'success',
-                        'data' => $data,
+                        'data' => $frais_all,
                     ], 200);
             }
             else{
@@ -56,7 +75,7 @@ class FraisController extends Controller
 
             if($table){
                 //verifier et retourne
-                $tableId = Frais::where('id_frais', $this->local_id)->first(); 
+                $tableId = Frais::where('id', $this->local_id)->first(); 
                 //$tableId = Frais::find($this->local_id);
                 
 
@@ -89,11 +108,4 @@ class FraisController extends Controller
     }
 
     //create type etablissement
-    public function createFrais(Request $request)
-    {
-        $request -> validate(["nom" => "required"]);
-        $obj = new Frais();
-
-        $obj::creerFrais($request->nom);
-    }
 }
