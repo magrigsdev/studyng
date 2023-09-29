@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Etablissements;
+use App\Models\Diplomes;
+use App\Models\Type_Etablissements;
+use App\Models\Etudiants;
 use Illuminate\Http\Request;
+use App\Models\Etablissements;
+use App\Models\Formations;
+use App\Models\Managers;
+use App\Models\Niveaux;
 use Illuminate\Support\Facades\Schema;
+use App\Functions\Myfunctions;
 
 class EtablissementsController extends Controller
 {
     //
+    use Myfunctions;
         public $local_id;
 
     //getData
@@ -17,14 +25,39 @@ class EtablissementsController extends Controller
         $table = Schema::hasTable('Etablissements');
 
         if($table){
-            $data = Etablissements::all();
+            $all = Etablissements::all();
             $count = Etablissements::count();
 
             if($count>0){
+                foreach ($all as  $item){
+                    $row_eta = Etablissements::find($item->id);
+                    $etudiant = Etudiants::find($row_eta->id_etu);
+                    $manager = Managers::find($row_eta->id_man);
+                    $formation = Formations::find($row_eta->id_for);
+                    $typetablement = Type_Etablissements::find($row_eta->id_tye);
+                    $diplome = Diplomes::find($row_eta->id_dip);
+                    $niveau = Niveaux::find($row_eta->id_niv);
+
+                    $etablissement = [
+                        'id'=>$item->id,
+                        'intituler' =>$item->intituler,
+                        'nom' =>$item->nom,
+                        'date'=> $this->FixedDate($item->date),
+                        'id_etu'=>$etudiant->nom,
+                        'manager'=>$manager->nom,
+                        'formation'=>$formation->nom,
+                        'typetablement'=>$typetablement->nom,
+                        'diplome'=>$diplome->nom,
+                        'niveau'=>$niveau->nom,
+                    ];
+
+                    $etablissements[] = $etablissement;
+                }
+
                 return response()->json([
                         'status' => true,
                         'message' => 'success',
-                        'data' => $data,
+                        'data' => $etablissements,
                     ], 200);
             }
             else{

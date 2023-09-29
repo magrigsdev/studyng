@@ -32,10 +32,10 @@ class FraisController extends Controller
 
                     $frais = [
                         'id'=>$item->id,
-                        'intituler' =>$item->nom,
-                        'date'=>$item->date,
-                        'id_etu'=>$etudiant,
-                        'id_tf'=>$type_frais,
+                        'intituler' =>$item->intituler,
+                        'date'=> $this->FixedDate($item->date),
+                        'id_etu'=>$etudiant->nom,
+                        'id_tf'=>$type_frais->intituler,
                     ];
 
                     $frais_all[] = $frais;

@@ -68,6 +68,6 @@ Route::post('man_create', [ManagersController::class,'createItem']);
 Route::put('man_update/{id}', [ManagersController::class,'updateItem']);
 Route::get('man_getItemBy/{nom}', [ManagersController::class,'getItemByName']);
 
-//Frais etablissemnt 
+// etablissemnt 
 Route::get('eta_getData', [EtablissementsController::class,'getData']);
 Route::get('eta_getItem/{id}', [EtablissementsController::class,'getItem']);

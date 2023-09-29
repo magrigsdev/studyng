@@ -9,12 +9,20 @@ trait Myfunctions
         return "test trait" . $var;
     }
 
-    public function getTable($table1,$value,$table2):string{
+    public function FixedDate($date):string{
+       
+        $temp = explode("-", $date);
+        $annee = $temp[0];
+        $mois = $temp[1];
+        $jour = $temp[2];
+        // $mydate = new \DateTime($date);
+        // $annee = $mydate->format("yyyy");
+        // $mois = $mydate->format("mm");
+        // $jour = $mydate->format("dd");
 
-        $temp = $table1::
-        $resultat = "";
-        return $resultat;
-    }
+        $dateFixed = $jour . "/" . $mois . "/" . $annee;
+        return $dateFixed;
+    } 
 }
 
 ?>
